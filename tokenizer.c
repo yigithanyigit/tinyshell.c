@@ -8,7 +8,7 @@
 
 void initToken(Token *token, TokenType type)
 {
-    token->type = 0;
+    token->type = type;
     token->value = shell_calloc(0, sizeof(char));
     setupToken(token);
 }
@@ -90,10 +90,9 @@ void tokenizer(char *input, TokenList *tokenList)
     Token *token = shell_calloc(1, sizeof(Token));
     initToken(token ,type);
     int ret;
-    ///< printf("%d %s %d", strcmp(input, "&"), input, sizeof(input));
-    if ((ret = isNumber(input)) != 0) {
-        type = NUMBER;
-    } else if (strcmp(input, "&") == 0) {
+    //if ((ret = isNumber(input)) != 0) {
+    //    type = NUMBER;
+    if (strcmp(input, "&") == 0) {
         type = BACKGROUND;
     } else if (strcmp(input, "|") == 0) {
         type = PIPE;
@@ -109,6 +108,7 @@ void tokenizer(char *input, TokenList *tokenList)
         type = EXIT;
     }  else if (type == NOTSET) {
         // Its a either a path operator or a command or a invalid token
+        /*
         for (int j = 0; j < i; j++) {
             if (input[j] == '/') {
                 type = DIRECTORY;
@@ -117,6 +117,8 @@ void tokenizer(char *input, TokenList *tokenList)
         }
         if (type == NOTSET)
             type = STRING;
+        */
+        type = STRING;
     } else {
         printf("Invalid token %s\n", input);
         shell_free(token);
@@ -151,8 +153,7 @@ Token* getCurrentToken(TokenList *tokenList)
 {
     if (tokenList->idx >= tokenList->length)
         return NULL;
-    Token* token =  tokenList->tokens[tokenList->idx];
-    return token;
+    return tokenList->tokens[tokenList->idx];
 }
 
 Token* peekNextToken(TokenList *tokenList)

@@ -26,14 +26,9 @@ int changeDir(char *path)
         goto success;
     }
 
-    char str[1024];
+    char str[1024]; // 1024 is max path length
     memset(str, 0, 1024);
 
-    // Check If full path or relative
-    // If its a relative path then (starts with . or ..) then append PWD to it
-
-    //printf("Path: %s\n", path);
-    // Check if path is relative
     if(path[0] != '/'){
         if (strcmp(path, ".") == 0) {
             if (getPwdEnv(str) != 0)
@@ -76,16 +71,14 @@ int changeDir(char *path)
     } else {
         strcpy(str, path);
     }
+
 change:
-    //printf("Path: %s %s\n", str, path);
     if(chdir(str) != 0) {
         perror("cd");
         goto error;
     }
-
     if(updatePwdEnv(str) != 0)
         goto error;
-
 success:
     return 0;
 error:
@@ -120,7 +113,7 @@ int updatePwdEnv(char *path)
         perror("cd");
         return 1;
     }
-    printf("PWD: %s\n", getenv("PWD"));
+    //printf("PWD: %s\n", getenv("PWD"));
     return 0;
 }
 

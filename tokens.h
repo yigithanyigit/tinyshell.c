@@ -2,10 +2,10 @@
 #define TOKENS_H
 
 typedef enum {
-    NUMBER,
+    //NUMBER,
     STRING,
     BACKGROUND,
-    DIRECTORY,
+    //DIRECTORY,
     PIPE,
     AND,
     CD,
