@@ -1,5 +1,5 @@
 CC=clang -g
-CCFLAGS= -Wall -fsanitize=address
+CCFLAGS= -Wall -O0 -fsanitize=address
 SOURCES = $(wildcard *.c)
 OBJECTS = $(SOURCES:.c=.o)
 
@@ -13,4 +13,4 @@ run:
 
 clean:
 	rm -rf *.o
-	rm -rf prog
+	rm -rf prog.out
